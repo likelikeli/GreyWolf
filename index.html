@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>锅打灰太狼</title>
+		<style type="text/css">
+			.box{
+				width: 320px;
+				height: 480px;
+				background: url('images/game_bg.jpg')no-repeat;
+				margin: 50px auto;
+				overflow: hidden;
+				position: relative;
+			}
+			.score{
+				color: white;
+				font-weight: bold;
+				font-size: 20px;
+				margin: 10px 0 0 60px;
+			}
+			.time{
+				width: 180px;
+				height: 16px;
+				background: url('images/progress.png');
+				position: absolute;
+				top: 66px;
+				left: 63px;
+			}
+			.btn{
+				margin-top: 200px;
+				font-size: 30px;
+				text-align: center;
+				color: red;
+				text-shadow: 0px 0px 5px yellow;
+				cursor: pointer;
+			}
+			.wolf{
+				width: 108px;
+				height: 101px;
+				position: absolute;
+			}
+			.progress{
+				background: red;
+				width: 1000px;
+				height: 1000px;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 20;
+			}
+			.content{
+				width: 200px;
+				height: 100px;
+				background-color: purple;
+				position: absolute;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				margin:auto;
+				text-align: center;
+				line-height: 100px;
+				display: none;
+				color: white;
+
+			}
+			@-webkit-keyframes rotate_pacman_half_up {
+			0% {
+				-webkit-transform: rotate(270deg);
+				transform: rotate(270deg);
+			}
+			50% {
+				-webkit-transform: rotate(360deg);
+				transform: rotate(360deg);
+			}
+			100% {
+				-webkit-transform: rotate(270deg);
+				transform: rotate(270deg);
+			}
+		}
+		
+		@keyframes rotate_pacman_half_up {
+			0% {
+				-webkit-transform: rotate(270deg);
+				transform: rotate(270deg);
+			}
+			50% {
+				-webkit-transform: rotate(360deg);
+				transform: rotate(360deg);
+			}
+			100% {
+				-webkit-transform: rotate(270deg);
+				transform: rotate(270deg);
+			}
+		}
+		
+		@-webkit-keyframes rotate_pacman_half_down {
+			0% {
+				-webkit-transform: rotate(90deg);
+				transform: rotate(90deg);
+			}
+			50% {
+				-webkit-transform: rotate(0deg);
+				transform: rotate(0deg);
+			}
+			100% {
+				-webkit-transform: rotate(90deg);
+				transform: rotate(90deg);
+			}
+		}
+		
+		@keyframes rotate_pacman_half_down {
+			0% {
+				-webkit-transform: rotate(90deg);
+				transform: rotate(90deg);
+			}
+			50% {
+				-webkit-transform: rotate(0deg);
+				transform: rotate(0deg);
+			}
+			100% {
+				-webkit-transform: rotate(90deg);
+				transform: rotate(90deg);
+			}
+		}
+		
+		@-webkit-keyframes pacman-balls {
+			75% {
+				opacity: 0.7;
+			}
+			100% {
+				-webkit-transform: translate(-100px, -6.25px);
+				transform: translate(-100px, -6.25px);
+			}
+		}
+		
+		@keyframes pacman-balls {
+			75% {
+				opacity: 0.7;
+			}
+			100% {
+				-webkit-transform: translate(-100px, -6.25px);
+				transform: translate(-100px, -6.25px);
+			}
+		}
+		
+		.pacman {
+			position: relative;
+			top: 200px;
+			left: 100px;
+		}
+		
+		.pacman>div:nth-child(2) {
+			-webkit-animation: pacman-balls 1s 0s infinite linear;
+			animation: pacman-balls 1s 0s infinite linear;
+		}
+		
+		.pacman>div:nth-child(3) {
+			-webkit-animation: pacman-balls 1s 0.33s infinite linear;
+			animation: pacman-balls 1s 0.33s infinite linear;
+		}
+		
+		.pacman>div:nth-child(4) {
+			-webkit-animation: pacman-balls 1s 0.66s infinite linear;
+			animation: pacman-balls 1s 0.66s infinite linear;
+		}
+		
+		.pacman>div:nth-child(5) {
+			-webkit-animation: pacman-balls 1s 0.99s infinite linear;
+			animation: pacman-balls 1s 0.99s infinite linear;
+		}
+		
+		.pacman>div:first-of-type {
+			width: 0px;
+			height: 0px;
+			border-right: 25px solid transparent;
+			border-top: 25px solid #fff;
+			border-left: 25px solid #fff;
+			border-bottom: 25px solid #fff;
+			border-radius: 25px;
+			-webkit-animation: rotate_pacman_half_up 0.5s 0s infinite;
+			animation: rotate_pacman_half_up 0.5s 0s infinite;
+		}
+		
+		.pacman>div:nth-child(2) {
+			width: 0px;
+			height: 0px;
+			border-right: 25px solid transparent;
+			border-top: 25px solid #fff;
+			border-left: 25px solid #fff;
+			border-bottom: 25px solid #fff;
+			border-radius: 25px;
+			-webkit-animation: rotate_pacman_half_down 0.5s 0s infinite;
+			animation: rotate_pacman_half_down 0.5s 0s infinite;
+			margin-top: -50px;
+		}
+		
+		.pacman>div:nth-child(3),
+		.pacman>div:nth-child(4),
+		.pacman>div:nth-child(5),
+		.pacman>div:nth-child(6) {
+			background-color: #fff;
+			width: 15px;
+			height: 15px;
+			border-radius: 100%;
+			margin: 2px;
+			width: 10px;
+			height: 10px;
+			position: absolute;
+			-webkit-transform: translate(0, -6.25px);
+			-ms-transform: translate(0, -6.25px);
+			transform: translate(0, -6.25px);
+			top: 25px;
+			left: 100px;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="content">
+				<span>得分：</span>
+				<span class="cont"></span>
+			</div>
+			<div class="progress">
+				<div class="loader">
+				<div class="loader-inner pacman">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+			</div>
+			</div>
+			<div class="score">0</div>
+			<div class="time"></div>
+			<div class="btn">
+				<div class="start">开始</div>
+				<div>游戏操作说明</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+		// 预加载
+		var srcArr = ["images/game_bg.jpg", "images/progress.png", "images/h0.png", "images/h1.png", "images/h2.png", "images/h3.png", "images/h4.png", "images/h5.png", "images/h6.png", "images/h7.png", "images/h8.png", "images/h9.png", "images/h10.png", "images/h16.png", "images/h17.png", "images/h18.png", "images/h19.png", "images/x0.png", "images/x1.png", "images/x2.png", "images/x3.png", "images/x4.png", "images/x5.png", "images/x6.png", "images/x7.png", "images/x8.png", "images/x9.png", "images/x10.png", "images/x16.png", "images/x17.png", "images/x18.png", "images/x19.png"];
+	var imgArr = [];
+	var ccc = 0;
+	for(var i = 0; i <  srcArr.length; i++){
+		var img = new Image();
+		img.src = srcArr[i];
+		img.onload = function(){
+			ccc++;
+			if( ccc == srcArr.length){
+				$(".progress").hide();
+			}
+		}
+		imgArr.push(img);
+	}
+		// 设置游戏参数
+		var time=30//游戏总时长
+		// var currentTime=30;//当前时常
+		// time=currentTime/time*180; //time宽
+		// currentTime-=5;
+		// 游戏开始
+		var arrPos = [
+				{left:"98px",top:"115px"},
+				{left:"17px",top:"160px"},
+				{left:"15px",top:"220px"},
+				{left:"30px",top:"293px"},
+				{left:"122px",top:"273px"},
+				{left:"207px",top:"295px"},
+				{left:"200px",top:"211px"},
+				{left:"187px",top:"141px"},
+				{left:"100px",top:"185px"}
+			];
+		$('.start').click(function(){
+			// 隐藏按钮
+			$(".btn").hide();
+			// 事件减少
+			timeGo();
+			// 出现狼
+			createWolf();
+		})
+		// 时间减少——倒计时开始
+		function timeGo(){
+			var timer=setInterval(function(){
+				// 事件的div宽180
+				$(".time").css("width",function(index,oldValue){
+					if(parseInt(oldValue)==0){
+						clearInterval(timer);
+						clearInterval(createWolfTimer)
+						setTimeout(function(){
+							$(".cont").html($(".score").html());
+							$(".content").css("display","block")
+						},500)
+						
+					}
+					return parseInt(oldValue)-180/time;
+				})
+
+			},1000)
+		}
+		// 开始出现狼
+		var createWolfTimer
+		function createWolf(){
+
+			// 每隔1秒出现1个狼，
+			 createWolfTimer=setInterval(function(){
+				var positionIndex=parseInt(Math.random()* arrPos.length);
+				var position=arrPos.splice(positionIndex,1)[0];
+				var type=Math.random()*10>8 ? "x" : "h";
+				var wolf= $("<img src='images/"+type+"0.png'/>").addClass("wolf").appendTo(".box").css({
+					// 狼的位置是随机的
+					left:  position.left,
+					top:  position.top
+				});
+			
+			// 狼的位置是随机的
+				var count=1;
+				var upTimer=setInterval(function(){
+					count++;
+					wolf.prop("src","images/"+type+count+".png");
+					if(count>=10){
+						wolf.remove();
+						arrPos.push( position);
+						clearInterval(upTimer);
+					}
+				},200)
+			// 狼会有冒出，下降的动画
+			// 狼可以同时出现两只
+			// 狼的位置不能重复
+			// 狼的类型分为灰太狼和小灰灰
+			wolf.one("click",function(){
+				clearInterval(upTimer);
+				var count=16;
+				var dieTimer=setInterval(function(){
+					
+					wolf.prop("src","images/"+type+count+".png");
+					count++;
+					if(count>19){
+						clearInterval(dieTimer);
+						wolf.remove();
+						arrPos.push( position);
+					}
+
+				},100)
+				var score=type=="x"?-10:10;
+				$(".score").html(function(index,oldValue){
+					return Number(oldValue)+score;
+				})
+			})
+			// 点击狼之后处理：点击灰太狼+10分，点击小灰灰-10分
+			},1000)
+		}
+		
+	</script>	
+</html>
